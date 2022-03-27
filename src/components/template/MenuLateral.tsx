@@ -1,10 +1,13 @@
-import { BellSvg, HomeSvg, SettingsSvg } from "../icons";
+import { BellSvg, HomeSvg, LogoutSvg, SettingsSvg } from "../icons";
 import Logo from "./Logo";
 import MenuItem from "./MenuItem";
 
 export default function MenuLateral(props) {
     return (
-        <aside>
+        <aside className={`
+          flex flex-col
+          bg-white dark:bg-gray-900
+        `}>
             <div className={`
               flex flex-col items-center justify-center
               h-20 w-20
@@ -12,10 +15,22 @@ export default function MenuLateral(props) {
             `}>
               <Logo />
             </div>
-            <ul>
+            <ul className="flex-grow">
               <MenuItem url="/" texto="Início" icon={HomeSvg} />
               <MenuItem url="/ajustes" texto="Ajustes" icon={SettingsSvg} />
               <MenuItem url="/notificacoes" texto="Notificações" icon={BellSvg} />
+            </ul>
+            <ul>
+              <MenuItem
+                texto="Sair"
+                icon={LogoutSvg}
+                onClick={() => console.log('Logout')}
+                className={`
+                  text-red-600 dark:text-red-400
+                  hover:bg-red-400
+                  hover:text-white dark:hover:text-white
+                `}
+              />
             </ul>
         </aside>
     )
