@@ -8,11 +8,11 @@ interface AppContextProps {
 }
 
 const AppContext = createContext<AppContextProps>({
-  tema: 'light',
+  tema: 'dark',
 })
 
 export function AppProvider(props) {
-  const [tema, setTema] = useState<Tema>('light')
+  const [tema, setTema] = useState<Tema>('dark')
 
   function mudarTema() {
     setTema(tema === 'dark' ? 'light' : 'dark')
