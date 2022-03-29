@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>Cod3r Panel</title>
         <meta name="description" content="Painel com Tailwind" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

@@ -4,7 +4,7 @@ import Logo from "./Logo";
 import MenuItem from "./MenuItem";
 
 export default function MenuLateral(props) {
-    const { logoutGoogle } = useAuth()
+    const { logout } = useAuth()
 
     return (
         <aside className={`
@@ -27,7 +27,7 @@ export default function MenuLateral(props) {
               <MenuItem
                 texto="Sair"
                 icon={LogoutSvg}
-                onClick={logoutGoogle}
+                onClick={logout}
                 className={`
                   text-red-600 dark:text-red-400
                   hover:bg-red-400
