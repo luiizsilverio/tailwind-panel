@@ -1,8 +1,11 @@
+import useAuth from "../../data/hook/useAuth";
 import { BellSvg, HomeSvg, LogoutSvg, SettingsSvg } from "../icons";
 import Logo from "./Logo";
 import MenuItem from "./MenuItem";
 
 export default function MenuLateral(props) {
+    const { logoutGoogle } = useAuth()
+
     return (
         <aside className={`
           flex flex-col
@@ -24,7 +27,7 @@ export default function MenuLateral(props) {
               <MenuItem
                 texto="Sair"
                 icon={LogoutSvg}
-                onClick={() => console.log('Logout')}
+                onClick={logoutGoogle}
                 className={`
                   text-red-600 dark:text-red-400
                   hover:bg-red-400

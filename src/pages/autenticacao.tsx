@@ -84,7 +84,7 @@ export default function Autenticacao() {
           w-full bg-red-500 hover:bg-red-400
           text-white rounded-lg px-4 py-3
         `}>
-          "Entrar com Google"
+          Entrar com Google
         </button>
 
         {
