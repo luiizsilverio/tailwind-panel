@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { WarningSvg } from "../components/icons";
 import AuthInput from "../components/auth/AuthInput";
+import useAuth from "../data/hook/useAuth";
 
 type Modo = 'signIn' | 'signUp'
 
@@ -7,12 +9,22 @@ export default function Autenticacao() {
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
   const [modo, setModo] = useState<Modo>('signIn')
+  const [erro, setErro] = useState()
+  const { loginGoogle } = useAuth()
 
-  function enviar() {
+  function exibirErro(msg, tempo = 3) {
+    setErro(msg)
+    setTimeout(() => setErro(null), tempo * 1000)
+  }
+
+  function submeter() {
     if (modo === 'signIn') {
-
+      exibirErro('Ocorreu um erro no login!')
+    } else {
+      exibirErro('Ocorreu um erro no cadastro!')
     }
   }
+
 
   return (
     <div className="flex h-screen justify-center items-center">
@@ -33,6 +45,18 @@ export default function Autenticacao() {
           }
         </h1>
 
+        {
+          erro &&
+            <div className={`
+              flex items-center gap-3 py-3 px-5 my-2
+              bg-red-400 text-white font-bold
+              border border-red-600 rounded-lg
+              `}>
+              {WarningSvg(8)}
+              <span>{ erro }</span>
+            </div>
+        }
+
         <AuthInput
           label="E-Mail"
           valor={email}
@@ -47,7 +71,7 @@ export default function Autenticacao() {
           required
         />
 
-        <button onClick={enviar} className={`
+        <button onClick={ submeter } className={`
           w-full bg-indigo-500 hover:bg-indigo-400
           text-white rounded-lg px-4 py-3 mt-6
         `}>
@@ -56,7 +80,7 @@ export default function Autenticacao() {
 
         <hr className="my-6 border-gray-300 w-full" />
 
-        <button onClick={enviar} className={`
+        <button onClick={ loginGoogle } className={`
           w-full bg-red-500 hover:bg-red-400
           text-white rounded-lg px-4 py-3
         `}>

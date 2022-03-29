@@ -8,7 +8,6 @@ type Props = InputProps & {
 }
 
 export default function AuthInput({ label, valor, ...rest }: Props) {
-  console.log(valor)
   return (
     <div className="flex flex-col mt-4">
       <label>{ label }</label>
