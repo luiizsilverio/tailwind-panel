@@ -9,19 +9,24 @@ export default function Autenticacao() {
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
   const [modo, setModo] = useState<Modo>('signIn')
+
   const [erro, setErro] = useState()
-  const { loginGoogle } = useAuth()
+  const { loginGoogle, loginEmail, cadastrarEmail } = useAuth()
 
   function exibirErro(msg, tempo = 3) {
     setErro(msg)
     setTimeout(() => setErro(null), tempo * 1000)
   }
 
-  function submeter() {
-    if (modo === 'signIn') {
-      exibirErro('Ocorreu um erro no login!')
-    } else {
-      exibirErro('Ocorreu um erro no cadastro!')
+  async function submeter() {
+    try {
+      if (modo === 'signIn') {
+        await loginEmail(email, senha)
+      } else {
+        await cadastrarEmail(email, senha)
+      }
+    } catch (erro) {
+      exibirErro(erro?.message ?? 'Erro inesperado.')
     }
   }
 

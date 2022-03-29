@@ -8,7 +8,9 @@ import User from '../../model/User'
 interface AuthContextProps {
   usuario: User
   loginGoogle: () => Promise<void>
-  logoutGoogle: () => Promise<void>
+  loginEmail: (email: string, senha: string) => Promise<void>
+  cadastrarEmail: (email: string, senha: string) => Promise<void>
+  logout: () => Promise<void>
   loading: boolean
 }
 
@@ -72,11 +74,37 @@ export function AuthProvider(props) {
     }
   }
 
-  async function logoutGoogle() {
+  async function logout() {
     try {
       setLoading(true)
       await firebase.auth().signOut()
       await configuraSessao(null)
+
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function loginEmail(email, senha) {
+    try {
+      setLoading(true)
+      const resp = await firebase.auth()
+        .signInWithEmailAndPassword(email, senha)
+
+      configuraSessao(resp.user).then(() => route.push('/'))
+
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function cadastrarEmail(email, senha) {
+    try {
+      setLoading(true)
+      const resp = await firebase.auth()
+        .createUserWithEmailAndPassword(email, senha)
+
+      configuraSessao(resp.user).then(() => route.push('/'))
 
     } finally {
       setLoading(false)
@@ -94,7 +122,14 @@ export function AuthProvider(props) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ usuario, loginGoogle, logoutGoogle, loading }}>
+    <AuthContext.Provider value={{
+      usuario,
+      loginGoogle,
+      logout,
+      loginEmail,
+      cadastrarEmail,
+      loading
+    }}>
       {props.children}
     </AuthContext.Provider>
   )

@@ -1,9 +1,7 @@
-import { createContext, useState } from "react";
-
-type Tema = 'dark' | 'light'
+import { createContext, useEffect, useState } from "react";
 
 interface AppContextProps {
-  tema: Tema
+  tema?: string
   mudarTema?(): void
 }
 
@@ -12,11 +10,18 @@ const AppContext = createContext<AppContextProps>({
 })
 
 export function AppProvider(props) {
-  const [tema, setTema] = useState<Tema>('dark')
+  const [tema, setTema] = useState('dark')
 
   function mudarTema() {
-    setTema(tema === 'dark' ? 'light' : 'dark')
+    const temaSalvo = tema === 'dark' ? 'light' : 'dark'
+    setTema(temaSalvo)
+    localStorage.setItem('cod3r-panel:tema', temaSalvo)
   }
+
+  useEffect(() => {
+    const temaSalvo = localStorage.getItem('cod3r-panel:tema')
+    setTema(temaSalvo === 'dark' ? 'dark' : 'light')
+  }, [])
 
   return (
     <AppContext.Provider value={{
